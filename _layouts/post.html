@@ -1,0 +1,65 @@
+---
+layout: default
+---
+{% assign media_prefix = '/assets/media' | relative_url %}
+{% assign src_old = 'src="/assets/media' %}
+{% assign src_new = 'src="' | append: media_prefix %}
+{% assign body = content | replace: src_old, src_new %}
+
+<article class="wrap-narrow post {% if page.type == 'article' %}is-article{% else %}is-short{% endif %}">
+  <a class="back" href="{{ '/' | relative_url }}#fil">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+    Toutes les publications
+  </a>
+
+  <p class="kicker">
+    {% if page.category %}{{ page.category }} · {% endif %}
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d/%m/%Y" }}</time>
+    {% if page.type == "article" %}
+      {% assign words = content | number_of_words %}
+      · {{ words | divided_by: 200 | plus: 1 }} min de lecture
+    {% endif %}
+  </p>
+
+  {% if page.type == "article" %}
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.cover and page.cover != "" %}
+      <img class="post-cover" src="{{ page.cover | relative_url }}" alt="">
+    {% endif %}
+  {% endif %}
+
+  <div class="post-body">
+    {{ body }}
+  </div>
+
+  {% if page.type == "video" %}
+    {% if page.video and page.video != "" %}
+      <video class="post-video" src="{{ page.video | relative_url }}" controls playsinline preload="metadata"></video>
+    {% elsif page.youtube and page.youtube != "" %}
+      {% assign yid = page.youtube | split: "v=" | last | split: "&" | first | split: "youtu.be/" | last | split: "shorts/" | last | split: "?" | first %}
+      <div class="post-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/{{ yid }}" title="Vidéo YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if page.photos and page.photos.size > 0 %}
+    <div class="gallery gallery-{{ page.photos.size | at_most: 4 }}">
+      {% for photo in page.photos %}
+        <img src="{{ photo | relative_url }}" alt="" loading="lazy">
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="post-actions">
+    <button type="button" class="btn btn-soft" data-share>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7h16v-7M12 3v12M7 8l5-5 5 5"/></svg>
+      <span>Partager</span>
+    </button>
+  </div>
+
+  <nav class="post-nav" aria-label="Autres publications">
+    {% if page.next %}<a href="{{ page.next.url | relative_url }}">← Plus récent</a>{% else %}<span></span>{% endif %}
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}">Plus ancien →</a>{% endif %}
+  </nav>
+</article>

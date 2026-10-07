@@ -1,0 +1,25 @@
+{% assign p = include.post %}
+{% case p.type %}
+  {% when "article" %}{% assign badge = "Article" %}
+  {% when "photo" %}{% assign badge = "Photo" %}
+  {% when "video" %}{% assign badge = "Vidéo" %}
+  {% else %}{% assign badge = "Post" %}
+{% endcase %}
+<article class="card" data-type="{{ p.type | default: 'post' }}" data-cat="{{ p.category | slugify }}">
+  <a class="card-link" href="{{ p.url | relative_url }}">
+    {% include media.html post=p %}
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="badge">{{ badge }}</span>
+        <span>{{ p.category }}</span>
+      </div>
+      {% if p.type == "article" %}
+        <h3 class="card-title">{{ p.title }}</h3>
+        <p class="card-text">{{ p.excerpt | strip_html | truncatewords: 28 }}</p>
+      {% else %}
+        <p class="card-text">{{ p.content | strip_html | truncatewords: 45 }}</p>
+      {% endif %}
+      <time class="card-date" datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%d/%m/%Y" }}</time>
+    </div>
+  </a>
+</article>

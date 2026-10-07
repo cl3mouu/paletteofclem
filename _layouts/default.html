@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+{% seo %}
+{% feed_meta %}
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <nav class="nav" aria-label="Rubriques">
+      <a href="{{ '/' | relative_url }}?cat=beaute#fil">Beauté</a>
+      <a href="{{ '/' | relative_url }}?cat=lifestyle#fil">Lifestyle</a>
+      <a href="{{ '/' | relative_url }}?cat=daily-life#fil">Daily life</a>
+      <a href="{{ '/a-propos/' | relative_url }}">À propos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+{{ content }}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <span>© {{ site.time | date: "%Y" }} {{ site.title }}</span>
+    <div class="footer-links">
+      {% if site.instagram != "" %}<a href="{{ site.instagram }}">Instagram</a>{% endif %}
+      {% if site.tiktok != "" %}<a href="{{ site.tiktok }}">TikTok</a>{% endif %}
+      <a href="{{ '/feed.xml' | relative_url }}">Flux RSS</a>
+    </div>
+  </div>
+</footer>
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

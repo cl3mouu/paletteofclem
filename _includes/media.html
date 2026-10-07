@@ -1,0 +1,25 @@
+{% comment %}
+  Affiche le média principal d'une publication dans une carte.
+  Paramètre : include.post
+{% endcomment %}
+{% assign p = include.post %}
+{% assign img = nil %}
+{% if p.cover and p.cover != "" %}{% assign img = p.cover %}{% elsif p.photos and p.photos.size > 0 %}{% assign img = p.photos | first %}{% endif %}
+
+{% if p.type == "video" and p.video and p.video != "" %}
+  <div class="card-media">
+    <video src="{{ p.video | relative_url }}#t=0.1" preload="metadata" muted playsinline></video>
+    <span class="play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+  </div>
+{% elsif p.type == "video" and p.youtube and p.youtube != "" %}
+  {% assign yid = p.youtube | split: "v=" | last | split: "&" | first | split: "youtu.be/" | last | split: "shorts/" | last | split: "?" | first %}
+  <div class="card-media">
+    <img src="https://i.ytimg.com/vi/{{ yid }}/hqdefault.jpg" alt="" loading="lazy">
+    <span class="play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+  </div>
+{% elsif img %}
+  <div class="card-media">
+    <img src="{{ img | relative_url }}" alt="" loading="lazy">
+    {% if p.photos.size > 1 %}<span class="count">{{ p.photos.size }} photos</span>{% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,31 @@
+title: Palette of Clem
+description: Beauté, lifestyle et petits moments du quotidien.
+lang: fr
+url: "https://cl3mouu.github.io"
+baseurl: "/paletteofclem"
+timezone: Europe/Brussels
+
+permalink: /:year/:month/:day/:title/
+future: false
+
+instagram: ""   # ex. https://www.instagram.com/tonpseudo
+tiktok: ""      # ex. https://www.tiktok.com/@tonpseudo
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
+  - .pages.yml

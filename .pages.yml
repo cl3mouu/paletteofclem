@@ -1,0 +1,91 @@
+media:
+  input: assets/media
+  output: /assets/media
+  categories: [image, video]
+
+content:
+  - name: posts
+    label: Publications
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{hour}{minute}{second}.md"
+    view:
+      fields: [type, title, category, date]
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: type
+        label: Type de publication
+        type: select
+        required: true
+        default: post
+        options:
+          values:
+            - { value: post, label: "Post rapide" }
+            - { value: article, label: "Article" }
+            - { value: photo, label: "Photo(s)" }
+            - { value: video, label: "Vidéo" }
+      - name: title
+        label: Titre
+        description: Obligatoire pour un article. Inutile pour un post rapide, une photo ou une vidéo.
+        type: string
+      - name: category
+        label: Rubrique
+        type: select
+        required: true
+        default: Beauté
+        options:
+          values: [Beauté, Lifestyle, Daily life]
+      - name: date
+        label: Date de publication
+        description: Mets une date dans le futur pour programmer la publication.
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd HH:mm"
+      - name: cover
+        label: Photo de couverture
+        description: Pour les articles (affichée en haut de l'article et sur l'accueil).
+        type: image
+      - name: photos
+        label: Photos
+        description: Une ou plusieurs photos, affichées sous le texte.
+        type: image
+        options:
+          multiple: true
+      - name: video
+        label: Fichier vidéo
+        description: Pour les vidéos courtes (idéalement moins de 25 Mo, format .mp4).
+        type: file
+        options:
+          categories: [video]
+      - name: youtube
+        label: Ou lien YouTube
+        description: Pour les vidéos longues, colle ici le lien YouTube.
+        type: string
+      - name: body
+        label: Texte
+        type: rich-text
+
+  - name: about
+    label: À propos
+    type: file
+    path: a-propos.md
+    fields:
+      - name: title
+        label: Titre
+        type: string
+      - name: permalink
+        type: string
+        hidden: true
+      - name: layout
+        type: string
+        hidden: true
+      - name: photo
+        label: Photo
+        type: image
+      - name: body
+        label: Texte
+        type: rich-text

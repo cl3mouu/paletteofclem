@@ -32,15 +32,13 @@ layout: default
     {{ body }}
   </div>
 
-  {% if page.type == "video" %}
-    {% if page.video and page.video != "" %}
-      <video class="post-video" src="{{ page.video | relative_url }}" controls playsinline preload="metadata"></video>
-    {% elsif page.youtube and page.youtube != "" %}
-      {% assign yid = page.youtube | split: "v=" | last | split: "&" | first | split: "youtu.be/" | last | split: "shorts/" | last | split: "?" | first %}
-      <div class="post-embed">
-        <iframe src="https://www.youtube-nocookie.com/embed/{{ yid }}" title="Vidéo YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
-      </div>
-    {% endif %}
+  {% if page.video and page.video != "" %}
+    <video class="post-video" src="{{ page.video | relative_url }}" controls playsinline preload="metadata"></video>
+  {% elsif page.youtube and page.youtube != "" %}
+    {% assign yid = page.youtube | split: "v=" | last | split: "&" | first | split: "youtu.be/" | last | split: "shorts/" | last | split: "?" | first %}
+    <div class="post-embed">
+      <iframe src="https://www.youtube-nocookie.com/embed/{{ yid }}" title="Vidéo YouTube" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
+    </div>
   {% endif %}
 
   {% if page.photos and page.photos.size > 0 %}
